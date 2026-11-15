@@ -20,8 +20,8 @@
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
       font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; color: #3c3a36;
     }
-    .logo { width: 132px; height: 132px; border-radius: 30px; box-shadow: 0 6px 24px rgba(60, 58, 54, .14); animation: pop .5s ease-out both; }
-    .name { font-size: 20px; letter-spacing: .12em; animation: fade .6s .1s ease-out both; }
+    .logo { width: 180px; height: 180px; animation: pop .5s ease-out both; }
+    .quote { max-width: 300px; padding: 0 24px; font-size: 16px; line-height: 1.8; letter-spacing: .06em; text-align: center; animation: fade .7s .15s ease-out both; }
     .status { font-size: 13px; color: #a8a294; letter-spacing: .08em; min-height: 1.5em; text-align: center; line-height: 1.7; }
     .status a { color: #9e3d32; }
     .dots span { display: inline-block; width: 6px; height: 6px; margin: 0 3px; border-radius: 50%; background: #cfc9bb; animation: blink 1.2s infinite both; }
@@ -33,13 +33,43 @@
 </head>
 <body>
   <img class="logo" src="icon-512.png" alt="">
-  <div class="name">專案管理</div>
+  <div class="quote" id="quote"></div>
   <div class="dots" aria-label="開啟中"><span></span><span></span><span></span></div>
   <div class="status" id="status"></div>
 
   <script>
     /* 系統網址：之後重新部署成「新的部署作業」而網址改變時，只要改這一行 */
     var SYSTEM_URL = 'https://script.google.com/macros/s/AKfycbw5xxjwGVcaPlH_SWtO2SrWdHNr3OsDdZU9Qo62l82LcjunCOCMWe4mqg5C7Qiy7sBD/exec';
+
+    /* 上班厭世語錄：每次隨機一句，不會跟上一次一樣 */
+    var QUOTES = [
+      '上班是為了下班，<br>下班是為了明天再上班。',
+      '今天也辛苦了，<br>雖然才剛開始。',
+      '鋤禾日當午，<br>週一最辛苦',
+      '世界上最短的距離，<br>就是假期開始到結束',
+      '不是所有久別重逢都是開心的，<br>例如放完假後的第一天上班',
+      '我最大的不足，<br>就是餘額不足',
+      '隨薪所欲，<br>薪盡自然涼',
+      '現代三好員工：<br>好餓、好累、好睏',
+      '我最大的缺點，<br>就是缺點錢',
+      '人家有的是背景，<br>我有的只有背影',
+      '早起可以做很多事，<br>比方說把鬧鐘關掉',
+      '看時間不是為了起床，<br>而是看還能睡多久',
+      '棉被以外的地方，<br>都是遠方',
+      '賴床是對週末<br>最基本的尊重',
+      '條條大路通羅馬，<br>但有些人一出生就在羅馬',
+      '如果恭恭敬敬的還是被人弄哭，<br>那就舒舒服服的把別人氣哭',
+      '謠言起於智者，<br>始於智障',
+      '如果你的世界下雨了，<br>就去買把傘',
+      '不會發光沒關係，<br>你還會發瘋，還會發福',
+    ];
+    (function () {
+      var last = -1, i;
+      try { last = Number(localStorage.getItem('pm.lastQuote')); } catch (e) {}
+      do { i = Math.floor(Math.random() * QUOTES.length); } while (i === last && QUOTES.length > 1);
+      try { localStorage.setItem('pm.lastQuote', String(i)); } catch (e) {}
+      document.getElementById('quote').innerHTML = QUOTES[i];
+    })();
 
     /* 先讓開啟畫面停一下再跳轉；系統載入的這段時間，畫面會一直停在這裡，不會變成空白 */
     setTimeout(function () { location.replace(SYSTEM_URL); }, 450);
