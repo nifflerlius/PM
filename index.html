@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- 不讓搜尋引擎收錄 -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>專案管理</title>
+  <!-- 主畫面上的名稱（iPhone） -->
+  <meta name="apple-mobile-web-app-title" content="專案管理">
+  <meta name="application-name" content="專案管理">
+  <!-- 手機最上方狀態列的顏色 -->
+  <meta name="theme-color" content="#f7f5ef">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    html, body { margin: 0; height: 100%; background: #f7f5ef; }
+    body {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+      font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; color: #3c3a36;
+    }
+    .logo { width: 132px; height: 132px; border-radius: 30px; box-shadow: 0 6px 24px rgba(60, 58, 54, .14); animation: pop .5s ease-out both; }
+    .name { font-size: 20px; letter-spacing: .12em; animation: fade .6s .1s ease-out both; }
+    .status { font-size: 13px; color: #a8a294; letter-spacing: .08em; min-height: 1.5em; text-align: center; line-height: 1.7; }
+    .status a { color: #9e3d32; }
+    .dots span { display: inline-block; width: 6px; height: 6px; margin: 0 3px; border-radius: 50%; background: #cfc9bb; animation: blink 1.2s infinite both; }
+    .dots span:nth-child(2) { animation-delay: .2s; } .dots span:nth-child(3) { animation-delay: .4s; }
+    @keyframes pop { from { transform: scale(.85); opacity: 0; } to { transform: none; opacity: 1; } }
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <img class="logo" src="icon-512.png" alt="">
+  <div class="name">專案管理</div>
+  <div class="dots" aria-label="開啟中"><span></span><span></span><span></span></div>
+  <div class="status" id="status"></div>
+
+  <script>
+    /* 系統網址：之後重新部署成「新的部署作業」而網址改變時，只要改這一行 */
+    var SYSTEM_URL = 'https://script.google.com/macros/s/AKfycbw5xxjwGVcaPlH_SWtO2SrWdHNr3OsDdZU9Qo62l82LcjunCOCMWe4mqg5C7Qiy7sBD/exec';
+
+    /* 先讓開啟畫面停一下再跳轉；系統載入的這段時間，畫面會一直停在這裡，不會變成空白 */
+    setTimeout(function () { location.replace(SYSTEM_URL); }, 450);
+
+    /* 等太久（例如網路很慢）時，給一個可以手動點的連結 */
+    setTimeout(function () {
+      var s = document.getElementById('status');
+      s.innerHTML = '連線比較慢，請稍候…<br><a href="' + SYSTEM_URL + '">沒有自動開啟的話，請點這裡</a>';
+    }, 8000);
+
+    /* 沒有網路時 */
+    if (navigator.onLine === false) {
+      document.getElementById('status').innerHTML = '目前沒有網路連線<br>連上網路後再試一次';
+    }
+  </script>
+</body>
+</html>
